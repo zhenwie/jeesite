@@ -897,7 +897,7 @@
 	<profiles>
 		<!-- 初始化数据库 -->			
 		<profile>
-			<id>init-db</id>
+			<id>init-db-bak</id>
 			<dependencies>
 				<dependency>
 					<groupId>org.dbunit</groupId>

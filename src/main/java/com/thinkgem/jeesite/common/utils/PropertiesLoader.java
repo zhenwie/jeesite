@@ -7,6 +7,7 @@ package com.thinkgem.jeesite.common.utils;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.NoSuchElementException;
 import java.util.Properties;
 
@@ -142,7 +143,8 @@ public class PropertiesLoader {
 			try {
 				Resource resource = resourceLoader.getResource(location);
 				is = resource.getInputStream();
-				props.load(is);
+				InputStreamReader isr = new InputStreamReader(is, "UTF-8");
+				props.load(isr);
 			} catch (IOException ex) {
 				logger.info("Could not load properties from path:" + location + ", " + ex.getMessage());
 			} finally {

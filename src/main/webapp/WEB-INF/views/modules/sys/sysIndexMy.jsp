@@ -23,7 +23,7 @@
                 tabs: [], loadOnce: true, tabWidth: 110, titleHeight: tabTitleHeight
             });//</c:if>
 			// 绑定菜单单击事件
-			$("#menu a.menu").click(function(){
+			$("#menu a.menu, a.travis").click(function(){
 				// 一级菜单焦点
 				$("#menu li.menu").removeClass("active");
 				$(this).parent().addClass("active");
@@ -149,9 +149,8 @@
 	<div id="main">
 		<div id="header" class="navbar navbar-fixed-top">
 			<div class="navbar-inner">
-				<div class="brand"><span id="productName">${fns:getConfig('productName')}</span></div>
+				<div class="brand"><i class="icon-home" style="line-height:inherit"></i> <span id="productName">${fns:getConfig('productName')}</span></div>
 				<ul id="userControl" class="nav pull-right">
-					<li><a href="${pageContext.request.contextPath}${fns:getFrontPath()}/index-${fnc:getCurrentSiteId()}.html" target="_blank" title="访问网站主页"><i class="icon-home"></i></a></li>
 					<li id="themeSwitch" class="dropdown">
 						<a class="dropdown-toggle" data-toggle="dropdown" href="#" title="主题切换"><i class="icon-th-large"></i></a>
 						<ul class="dropdown-menu">
@@ -163,7 +162,7 @@
 					<li id="userInfo" class="dropdown">
 						<a class="dropdown-toggle" data-toggle="dropdown" href="#" title="个人信息">您好, ${fns:getUser().name}&nbsp;<span id="notifyNum" class="label label-info hide"></span></a>
 						<ul class="dropdown-menu">
-							<li><a href="${ctx}/sys/user/info" target="mainFrame"><i class="icon-user"></i>&nbsp; 个人信息</a></li>
+							<li><a class="travis" href="${ctx}/sys/user/info" target="mainFrame"><i class="icon-user"></i>&nbsp; 个人信息</a></li>
 							<li><a href="${ctx}/sys/user/modifyPwd" target="mainFrame"><i class="icon-lock"></i>&nbsp;  修改密码</a></li>
 							<li><a href="${ctx}/oa/oaNotify/self" target="mainFrame"><i class="icon-bell"></i>&nbsp;  我的通知 <span id="notifyNum2" class="label label-info hide"></span></a></li>
 						</ul>
@@ -180,7 +179,7 @@
 						$("#productName").hide();$("#user").html($("#userControl"));$("#header").prepend($("#user, #logo"));
 					</script>
 				</c:if> --%>
-				<div class="nav-collapse">
+				<div class="nav-collapse pull-right">
 					<ul id="menu" class="nav" style="*white-space:nowrap;float:none;">
 						<c:set var="firstMenu" value="true"/>
 						<c:forEach items="${fns:getMenuList()}" var="menu" varStatus="idxStatus">

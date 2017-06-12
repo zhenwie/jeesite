@@ -147,7 +147,7 @@
 </head>
 <body>
 	<div id="main">
-		<div id="header" class="navbar navbar-fixed-top">
+		<div id="header" class="navbar navbar-fixed-top" style="margin-bottom: 2px;">
 			<div class="navbar-inner">
 				<div class="brand"><i class="icon-home" style="line-height:inherit"></i> <span id="productName">${fns:getConfig('productName')}</span></div>
 				<ul id="userControl" class="nav pull-right">

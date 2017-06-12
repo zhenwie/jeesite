@@ -209,7 +209,7 @@ app.title = '热力图与百度地图扩展';
 $.get('${ctxStatic}/data.json', function (data) {
 
 
-	//var data = eval("("+data+")");
+	var data = eval("("+data+")");
 	var points = [].concat.apply([], data.map(function (track) {
 		return track.map(function (seg) {
 			return seg.coord.concat([1]);

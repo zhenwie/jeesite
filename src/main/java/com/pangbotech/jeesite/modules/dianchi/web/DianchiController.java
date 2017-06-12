@@ -27,4 +27,12 @@ public class DianchiController extends BaseController {
         return "modules/dianchi/map";
     }
 
+    /**
+     * 显示过程检测分析图表
+     * @return
+     */
+    @RequestMapping(value = "phaseAnalysis")
+    public String showPhaseAnalysis() {
+        return "modules/dianchi/phaseAnalysis";
+    }
 }

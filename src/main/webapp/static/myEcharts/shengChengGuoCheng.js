@@ -42,7 +42,7 @@ var shengChengModule = (function (myEcharts) {
             }
         },
         legend: {
-            data: ['TP', 'TN', 'COD', 'BOD', 'SS', 'NH3-N', 'PH', '流量']
+            data: ['TP', 'TN', 'COD', 'BOD', 'SS', 'TH3-N', 'PH', '流量']
         },
         toolbox: {
             show: true,
@@ -148,7 +148,7 @@ var shengChengModule = (function (myEcharts) {
                         }
                     }
                 },
-                data: [25, 26, 25, 24, 24, 26, 25, 25, 24, 25, 26, 26]
+                data: [5, 10, 15, 20, 25, 30, 35, 40, 35, 30, 25, 20]
             },
             {
                 name: 'TN',
@@ -339,38 +339,54 @@ var shengChengModule = (function (myEcharts) {
     clearInterval(app.timeTicket);
 
     app.count = 11;
-    app.timeTicket = setInterval(function () {
-        axisData = (new Date()).toLocaleTimeString().replace(/^\D*/, '');
+    app.timeTicket = setInterval(getChartData, 5000);
+    
+    function getChartData() {
+        //获得图表的options对象 
+        var options = myChart1.getOption();
+        //通过Ajax获取数据 
+        $.ajax({
+            type: "get",
+            async: false, //同步执行 
+            url: "api/echartShengChengData",
+            data: {},
+            dataType: "json", //返回数据形式为json
+            success: function (result) {
+                if (result) {
+                    options.legend.data = result.legend;
+                    //options.xAxis[0].data = result.category;
+                    //options.series[0].data = result.series[0].data;
+                    //alert(options.series[0].data);
+
+                    var axisData = (new Date()).toLocaleTimeString().replace(/^\D*/, '');
 
 
-        var data0 = option1.series[0].data;
-        var data1 = option1.series[1].data;
-        var data2 = option1.series[2].data;
-        var data3 = option1.series[3].data;
+                    var data0 = options.series[0].data;
+                    var data1 = options.series[1].data;
+                    var data2 = options.series[2].data;
+                    var data3 = options.series[3].data;
 
+                    data0.shift();
+                    data0.push(result.series[0].data[0]);
+                    data1.shift();
+                    data1.push(result.series[1].data[0]);
+                    data2.shift();
+                    data2.push(result.series[2].data[0]);
+                    data3.shift();
+                    data3.push(result.series[3].data[0]);
 
-        data0.shift();
-        data0.push(Math.round(Math.random() * 25));
-        data1.shift();
-        data1.push((Math.random() * 6 + 5).toFixed(1) - 0);
-        data2.shift();
-        data2.push((Math.random() * 5 + 5).toFixed(1) - 0);
-        data3.shift();
-        data3.push((Math.random() * 4 + 5).toFixed(1) - 0);
+                    options.xAxis[0].data.shift();
+                    options.xAxis[0].data.push(axisData);
 
-
-
-
-
-
-        option1.xAxis[0].data.shift();
-        option1.xAxis[0].data.push(axisData);
-
-
-
-        myChart1.setOption(option1);
-
-
-    }, 5000);
+                    myChart1.hideLoading();
+                    myChart1.setOption(options);
+                }
+            },
+            error: function (errorMsg) {
+                alert("图表请求数据失败啦!");
+                myChart1.hideLoading();
+            }
+        });
+    }
 
 })(myEcharts || []);

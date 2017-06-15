@@ -329,21 +329,41 @@ var jieWuModule = (function () {
         data3.shift();
         data3.push((Math.random() * 4 + 5).toFixed(1) - 0);
 
-
-
-
-
-
         option1.xAxis[0].data.shift();
         option1.xAxis[0].data.push(axisData);
-
-
 
         myChart1.setOption(option1);
 
 
     }, 5000);
+    
+    function getChartData() {
+        //获得图表的options对象 
+        var options = myChart1.getOption();
+        //通过Ajax获取数据 
+        $.ajax({
+            type: "get",
+            async: false, //同步执行 
+            url: "jeesite/a/api/echartShengChengData",
+            data: {},
+            dataType: "json", //返回数据形式为json
+            success: function (result) {
+                if (result) {
+                    options.legend.data = result.legend;
+                    options.xAxis[0].data = result.category;
+                    options.series[0].data = result.series[0].data;
+                    //alert(options.series[0].data);
 
+                    myChart1.hideLoading();
+                    myChart1.setOption(options);
+                }
+            },
+            error: function (errorMsg) {
+                alert("图表请求数据失败啦!");
+                myChart.hideLoading();
+            }
+        });
+    }
 })();
 
 
